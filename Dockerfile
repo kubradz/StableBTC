@@ -1,23 +1,12 @@
-# Utilise une image Node
 FROM node:18-alpine
-
-# Crée le dossier de travail
 WORKDIR /app
 
-# Copie les fichiers de dépendances
-COPY package*.json ./
-
-# Installe les dépendances
+# Copie uniquement ce qu'il faut depuis /frontend
+COPY frontend/package*.json ./
 RUN npm install
 
-# Copie tout le reste
-COPY . .
-
-# Build l'app (si Next.js ou React)
+COPY frontend ./
 RUN npm run build
 
-# Expose le port
 EXPOSE 3000
-
-# Lance l'app
 CMD ["npm", "start"]
